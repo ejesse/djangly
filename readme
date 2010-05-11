@@ -1,0 +1,28 @@
+This is a very simple Django app to include shareable bit.ly URLs for the URLs in your site. It utilizes python-bitly ( http://code.google.com/p/python-bitly/ ).
+
+Djangly adds bit.ly URLs to a single, standalone database model as URLs are requested and bypasses the bit.ly API call if the requested URL is already in the database.
+
+To use:
+
+0. If you do not have a bit.ly API key, go here: 
+
+http://bit.ly/account/your_api_key
+
+1. Add 'djangly' to your INSTALLED_APPS in your project's settings.py.
+
+2. In your project's settings.py add to MIDDLEWARE_CLASSES:
+
+'djangly.middleware.DjanglyMiddleware'
+
+3. In your project's settings.py add to TEMPLATE_CONTEXT_PROCESSORS:
+
+"djangly.context_processors.bitly",
+
+4. In djangly's settings.py, edit the following two lines with your bit.ly login and API key:
+
+BITLY_LOGIN="YOUR_BITLY_LOGIN"
+BITLY_API_KEY="YOUR_BITLY_API_KEY
+
+5. Syncdb
+
+That should be it. The context processor will automatically drop a variable named {{ BITLY_URL }} with a bit.ly URL for your page or the current URL if you are on localhost (see EXCLUDED_HOSTS in djangly/settings.py).
