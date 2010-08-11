@@ -5,7 +5,7 @@ import settings
 class DjanglyMiddleware():
     
     def process_request(self, request):
-        host = request.META['REMOTE_ADDR']
+        host = request.META['HTTP_HOST']
         if not host in settings.EXCLUDED_HOSTS:
             request_uri = request.build_absolute_uri()
             if BitlyURL.objects.filter(unshorted_url=request_uri).count() < 1:
