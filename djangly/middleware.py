@@ -8,13 +8,14 @@ class DjanglyMiddleware():
         host = request.META['HTTP_HOST']
         if not host in settings.EXCLUDED_HOSTS:
             request_uri = request.build_absolute_uri()
-            if BitlyURL.objects.filter(unshorted_url=request_uri).count() < 1:
-                newbitly = BitlyURL()
-                newbitly.unshorted_url = request_uri
-                a=Api(login=settings.BITLY_LOGIN,apikey=settings.BITLY_API_KEY)
-                short=a.shorten(request_uri,{'history':1}) 
-                newbitly.shortened_url=short
-                newbitly.save()
+            if '/admin/' not in request_uri:
+                if BitlyURL.objects.filter(unshorted_url=request_uri).count() < 1:
+                    newbitly = BitlyURL()
+                    newbitly.unshorted_url = request_uri
+                    a=Api(login=settings.BITLY_LOGIN,apikey=settings.BITLY_API_KEY)
+                    short=a.shorten(request_uri,{'history':1}) 
+                    newbitly.shortened_url=short
+                    newbitly.save()
             
         return None
     
