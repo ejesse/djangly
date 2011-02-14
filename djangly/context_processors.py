@@ -11,7 +11,7 @@ def bitly(request):
         ## We don't want raise exceptions if we're local or bit.ly is having issues
         ## since it will interrupt page rendering, and well, it would be embarrassing
         ## to have your site crash cause it couldn't get a short URL. Having said that,
-        ## you may want to log here.
+        ## you may want to log here, rather than just passing
         pass
     except BitlyError:
         pass
