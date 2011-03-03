@@ -33,12 +33,15 @@ class DjanglyMiddleware():
         
         ## okay, looks like all those tests were passed, let's go shorten...
         if BitlyURL.objects.filter(unshorted_url=request_uri).count() < 1:
-            newbitly = BitlyURL()
-            newbitly.unshorted_url = request_uri
-            a=Api(login=settings.BITLY_LOGIN,apikey=settings.BITLY_API_KEY)
-            short=a.shorten(request_uri,{'history':1}) 
-            newbitly.shortened_url=short
-            newbitly.save()
+			try:
+	            newbitly = BitlyURL()
+	            newbitly.unshorted_url = request_uri
+	            a=Api(login=settings.BITLY_LOGIN,apikey=settings.BITLY_API_KEY)
+	            short=a.shorten(request_uri,{'history':1}) 
+	            newbitly.shortened_url=short
+	            newbitly.save()
+			except:
+				pass
             
         return None
     
